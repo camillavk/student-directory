@@ -24,3 +24,8 @@ puts "Schlap"
 puts "Andrew Whercules"
 puts "Karin Nielsen"
 puts "Andrew Snead"
+puts "Camilla van Klinken"
+
+print "Overall we have "
+print 24
+puts " great students"
