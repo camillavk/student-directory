@@ -60,13 +60,25 @@ def add_student(name, cohort)
 	@students << {:name => name, :cohort => cohort.to_sym}
 end
 
-def load_students
-	file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+	file = File.open(filename, "r")
 	file.readlines.each do |line|
 		name, cohort = line.chomp.split(',')
 		add_student(name, cohort)
 	end
 	file.close
+end
+
+def try_load_students
+	filename = ARGV.first
+	return if filename.nil?
+	if File.exists?(filename)
+		load_students(filename)
+		puts "Loaded #{@students.length} from #{filename}"
+	else
+		puts "Sorry, #{filename} doesn't exist."
+		exit
+	end
 end
 
 def process(selection)
@@ -89,8 +101,9 @@ end
 def interactive_menu
 	loop do
 		print_menu
-		process(gets.chomp)
+		process(STDIN.gets.chomp)
 	end
 end
 
+try_load_students
 interactive_menu
